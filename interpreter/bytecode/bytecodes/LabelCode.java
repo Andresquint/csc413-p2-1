@@ -2,5 +2,5 @@ package interpreter.bytecode.bytecodes;
 
 import interpreter.bytecode.ByteCode;
 
-public class LABEL extends ByteCode {
+public class LabelCode extends ByteCode {
 }

@@ -2,5 +2,5 @@ package interpreter.bytecode.bytecodes;
 
 import interpreter.bytecode.ByteCode;
 
-public class DUMP extends ByteCode {
+public class DumpCode extends ByteCode {
 }

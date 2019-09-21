@@ -2,5 +2,5 @@ package interpreter.bytecode.bytecodes;
 
 import interpreter.bytecode.ByteCode;
 
-public class RETURN extends ByteCode {
+public class ReturnCode extends ByteCode {
 }
