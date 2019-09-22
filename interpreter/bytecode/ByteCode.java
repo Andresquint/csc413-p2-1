@@ -1,4 +1,5 @@
 package interpreter.bytecode;
 
-public class ByteCode {
+public abstract class ByteCode {
+    public abstract ByteCode initCode();
 }
