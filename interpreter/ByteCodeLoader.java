@@ -1,9 +1,13 @@
 
 package interpreter;
 
+import interpreter.bytecode.ByteCode;
+
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class ByteCodeLoader extends Object {
@@ -28,6 +32,16 @@ public class ByteCodeLoader extends Object {
      *      the newly created ByteCode instance via the init function.
      */
     public Program loadCodes() {
-       return null;
+        //while string.at(i) != space
+            //push the bytecode into program arraylist
+        String tempByteCode = "HALT";
+        String codeName = CodeTable.getClassName(tempByteCode);
+        try {
+            Class c = Class.forName("interpreter.bytecode.bytecodes." + codeName);
+            ByteCode code = (ByteCode)c.getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
