@@ -13,7 +13,7 @@ public class Program {
         program = new ArrayList<>();
     }
 
-    protected ByteCode getCode(int pc) {
+    public ByteCode getCode(int pc) {
         return this.program.get(pc);
     }
 
@@ -27,7 +27,10 @@ public class Program {
 
     }
 
-
+    //this should store a fully initialized bytecode instance
+    public void setCode(ByteCode code){
+        program.add(code);
+    }
 
 
 }
