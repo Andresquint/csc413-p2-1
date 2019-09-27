@@ -7,4 +7,9 @@ public class ReadCode extends ByteCode {
     public ByteCode initCode() {
         return null;
     }
+
+    @Override
+    public void execute() {
+
+    }
 }

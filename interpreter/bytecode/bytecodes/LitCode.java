@@ -7,4 +7,9 @@ public class LitCode extends ByteCode {
     public ByteCode initCode() {
         return null;
     }
+
+    @Override
+    public void execute() {
+
+    }
 }

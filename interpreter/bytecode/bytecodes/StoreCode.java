@@ -7,4 +7,9 @@ public class StoreCode extends ByteCode {
     public ByteCode initCode() {
         return null;
     }
+
+    @Override
+    public void execute() {
+
+    }
 }
