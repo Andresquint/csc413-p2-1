@@ -55,6 +55,7 @@ public class ByteCodeLoader extends Object {
                         try {
                             Class c = Class.forName("interpreter.bytecode.bytecodes." + codeName);
                             ByteCode code = (ByteCode)c.getDeclaredConstructor().newInstance();
+                            code.initCode();
                             p.setCode(code);
                         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                             e.printStackTrace();
