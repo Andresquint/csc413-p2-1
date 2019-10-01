@@ -2,3 +2,4 @@ HALT
 POP 3
 FALSEBRANCH else<<4>>
 GOTO continue<<3>>
+STORE 3 i
