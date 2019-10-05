@@ -1,8 +1,10 @@
 package interpreter.bytecode.bytecodes;
 
+import interpreter.bytecode.ByteCode;
+
 import java.util.ArrayList;
 
-public class FalseBranchCode extends LabelCode {
+public class FalseBranchCode extends ByteCode {
    private int labelNumber;
    private String labelName;
     @Override
@@ -20,11 +22,9 @@ public class FalseBranchCode extends LabelCode {
 
     }
 
-    @Override
     public String getLabel() {
         return labelName;
     }
-    @Override
     public int getNumber() {
         return labelNumber;
     }

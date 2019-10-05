@@ -4,7 +4,7 @@ import interpreter.bytecode.ByteCode;
 
 import java.util.ArrayList;
 
-public class CallCode extends LabelCode {
+public class CallCode extends ByteCode {
     private int callValue;
     private String id;
 
@@ -23,14 +23,12 @@ public class CallCode extends LabelCode {
 
     }
 
-    @Override
     public String getLabel() {
         return id;
     }
     public void setNumber(int addr){
         callValue = addr;
     }
-    @Override
     public int getNumber() {
         return callValue;
     }

@@ -4,7 +4,7 @@ import interpreter.bytecode.ByteCode;
 
 import java.util.ArrayList;
 
-public class GotoCode extends LabelCode {
+public class GotoCode extends ByteCode {
     private int labelNumber;
     private String labelName;
     @Override
@@ -22,11 +22,9 @@ public class GotoCode extends LabelCode {
 
     }
 
-    @Override
     public String getLabel() {
         return labelName;
     }
-    @Override
     public int getNumber() {
         return labelNumber;
     }
