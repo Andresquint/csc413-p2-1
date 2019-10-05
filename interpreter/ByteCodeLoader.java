@@ -101,6 +101,7 @@ public class ByteCodeLoader extends Object {
                 e.printStackTrace();
             }
         }
+        p.resolveAddrs();
         return p;
     }
 }
