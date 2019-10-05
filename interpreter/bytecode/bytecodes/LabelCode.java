@@ -6,17 +6,23 @@ import java.util.ArrayList;
 
 public class LabelCode extends ByteCode {
     private String idName;
-    private int idNumber;
+    private int idNumber = 0;
 
     @Override
     public void initCode(ArrayList args) {
         idName = (String) args.get(1);
         if(args.size() == 3)
-            idNumber = (int) args.get(2);
+            idNumber = Integer.parseInt((String)args.get(2));
     }
 
     @Override
     public void execute() {
 
+    }
+    public String getLabel() {
+        return idName;
+    }
+    public int getNumber() {
+        return idNumber;
     }
 }
