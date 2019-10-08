@@ -1,5 +1,7 @@
 package interpreter;
 
+import interpreter.bytecode.ByteCode;
+
 import java.util.Stack;
 
 public class VirtualMachine {
@@ -14,6 +16,15 @@ public class VirtualMachine {
         this.program = program;
     }
 
-    public void executeProgram(){};
+    public void executeProgram(){
+        pc = 0;
+        runStack = new RunTimeStack();
+        returnAddrs = new Stack<Integer>();
+        isRunning = true;
+        while(isRunning){
+            ByteCode code = program.getCode(pc);
+            code.execute(this);
+        }
+    };
 
 }

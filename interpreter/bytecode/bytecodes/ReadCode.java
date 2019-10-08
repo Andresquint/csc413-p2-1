@@ -1,5 +1,6 @@
 package interpreter.bytecode.bytecodes;
 
+import interpreter.VirtualMachine;
 import interpreter.bytecode.ByteCode;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class ReadCode extends ByteCode {
     }
 
     @Override
-    public void execute() {
+    public void execute(VirtualMachine virtualMachine) {
 
     }
 }

@@ -1,5 +1,6 @@
 package interpreter.bytecode.bytecodes;
 
+import interpreter.VirtualMachine;
 import interpreter.bytecode.ByteCode;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class LabelCode extends ByteCode {
     }
 
     @Override
-    public void execute() {
+    public void execute(VirtualMachine virtualMachine) {
 
     }
     public String getLabel() {

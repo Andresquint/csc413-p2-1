@@ -1,5 +1,6 @@
 package interpreter.bytecode.bytecodes;
 
+import interpreter.VirtualMachine;
 import interpreter.bytecode.ByteCode;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class StoreCode extends ByteCode {
     }
 
     @Override
-    public void execute() {
+    public void execute(VirtualMachine virtualMachine) {
 
     }
 }
