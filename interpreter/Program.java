@@ -15,14 +15,14 @@ public class Program {
     private ArrayList<ByteCode> program;
 
     //stores the index (line number)  for each LABEL code
-    private HashMap<String, Integer> h = new HashMap<>();
+    private static HashMap<String, Integer> h = new HashMap<>();
 
     public Program() {
         program = new ArrayList<>();
     }
 
     public ByteCode getCode(int pc) {
-        return this.program.get(pc);
+        return program.get(pc);
     }
 
     /**
@@ -32,47 +32,34 @@ public class Program {
      * HINT: make note what type of data-stucture bytecodes are stored in.
      */
     public void resolveAddrs() {
-        //loop through all lines and collect LABELs and their respective line numbers
-        //place label concatenated with number as key and line number as value
-        for(int i = 1; i <= program.size() - 1; i++)
-        {
-            if (program.get(i) instanceof LabelCode)
-            {
-                h.put(((LabelCode) program.get(i)).getLabel() + ((LabelCode) program.get(i)).getNumber(), i);
-            }
-        }
-        //replace the previous numbers with line numbers from hashmap
-        for(int i = 1; i <= program.size() - 1; i++)
-        {
-            if(program.get(i) instanceof FalseBranchCode)
-            {
+        for (int i = 0; i < program.size(); i++) {
+            //this variable isn't really needed,
+            //but i used it for readability with each get function
+            Integer r;
+
+            if (program.get(i) instanceof FalseBranchCode) {
                 FalseBranchCode fbc = (FalseBranchCode) program.get(i);
-                if(h.containsKey(fbc.getLabel() + fbc.getNumber()))
-                {
-                    fbc.setNumber(h.get(fbc.getLabel() + fbc.getNumber()));
-                }
-            }
-            else if(program.get(i) instanceof GotoCode)
-            {
+                r = h.get(fbc.getLabel());
+                fbc.setNumber(r);
+            } else if (program.get(i) instanceof GotoCode) {
                 GotoCode gtc = (GotoCode) program.get(i);
-                if(h.containsKey(gtc.getLabel() + gtc.getNumber()))
-                {
-                    gtc.setNumber(h.get(gtc.getLabel() + gtc.getNumber()));
-                }
-            }
-            else if (program.get(i) instanceof CallCode)
-            {
+                r = h.get(gtc.getLabel());
+                gtc.setNumber(r);
+            } else if (program.get(i) instanceof CallCode) {
                 CallCode cc = (CallCode) program.get(i);
-                if(h.containsKey(cc.getLabel() + cc.getNumber()))
-                {
-                    cc.setNumber(h.get(cc.getLabel() + cc.getNumber()));
-                }
+                r = h.get(cc.getLabel());
+                cc.setNumber(r);
             }
         }
     }
 
     //this should store a fully initialized bytecode instance
-    public void setCode(ByteCode code){
+    public void setCode(ByteCode code) {
+        //check if code is a label so we can add it to the hashmap
+        if (code instanceof LabelCode) {
+            LabelCode l = (LabelCode) code;
+            h.put(l.getLabel(), program.size());
+        }
         program.add(code);
     }
 }
