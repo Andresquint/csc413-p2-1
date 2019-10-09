@@ -12,15 +12,16 @@ public class LoadCode extends ByteCode {
     @Override
     public void initCode(ArrayList args) {
         try {
-            loadValue = Integer.parseInt((String) args.get(1));
-            if (args.size() == 3)
-            id = (String)args.get(2);
+            loadValue = Integer.parseInt((String) args.get(0));
+            if (args.size() > 1)
+                id = (String) args.get(1);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
 
     @Override
     public void execute(VirtualMachine virtualMachine) {
-
+        virtualMachine.runStack.load(loadValue);
     }
 }
