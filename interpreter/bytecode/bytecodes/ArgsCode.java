@@ -11,13 +11,18 @@ public class ArgsCode extends ByteCode {
     @Override
     public void initCode(ArrayList args) {
         try {
-            numArgs = Integer.parseInt((String) args.get(1));
+            numArgs = Integer.parseInt((String) args.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
 
     @Override
     public void execute(VirtualMachine virtualMachine) {
+        virtualMachine.runStack.newFrameAt(numArgs);
 
+        if (virtualMachine.isDumping) {
+            System.out.println("ARGS" + " " + numArgs);
+        }
     }
 }
