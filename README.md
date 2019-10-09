@@ -1,7 +1,7 @@
 # CSC 413 - Project Two - The Interpreter
 
-## Student Name  : Name here
+## Student Name  : Corey Russ
 
-## Student ID    : ID here
+## Student ID    : 917717871
 
-## Student Email : Email here
+## Student Email : cruss@mail.sfsu.edu

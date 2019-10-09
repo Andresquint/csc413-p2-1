@@ -9,7 +9,6 @@
 
 #intlij .idea
 .idea
-.idea
 out/*
 
 
@@ -33,3 +32,4 @@ nbproject/*
 *.tar.gz
 *.rar
 
+*.iml
