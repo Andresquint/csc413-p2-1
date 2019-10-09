@@ -12,14 +12,22 @@ public class ReturnCode extends ByteCode {
     @Override
     public void initCode(ArrayList args) {
         try {
-            id = (String)args.get(1);
-            if (args.size() == 3)
-                returnValue = Integer.parseInt((String) args.get(2));
+            if (args.size() > 0)
+                id = (String) args.get(0);
+            else id = "";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
+
     @Override
     public void execute(VirtualMachine virtualMachine) {
-
+        //"undo" CALL
+        //set program counter to the return address
+        virtualMachine.pc = virtualMachine.returnAddrs.pop();
+        //need to remove the frame created
+        virtualMachine.runStack.popFrame();
+        //get the return value from the stack
+        returnValue = virtualMachine.runStack.peek();
     }
 }
