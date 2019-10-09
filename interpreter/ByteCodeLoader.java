@@ -3,11 +3,9 @@ package interpreter;
 
 import interpreter.bytecode.ByteCode;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -15,8 +13,6 @@ import java.util.StringTokenizer;
 public class ByteCodeLoader extends Object {
 
     private BufferedReader byteSource;
-
-    private static final String DELIMITERS = "<> ";
 
     /**
      * Constructor Simply creates a buffered reader.
@@ -37,70 +33,47 @@ public class ByteCodeLoader extends Object {
      * the newly created ByteCode instance via the init function.
      */
     public Program loadCodes() {
-        //while string.at(i) != space
-        //push the bytecode into program arraylist
-
-        StringTokenizer tokenizer;
-        StringBuilder word = new StringBuilder();
-        int token;
-        ArrayList<String> a = new ArrayList<>();
         Program p = new Program();
+        //The Vector args holds the arguments associated with each bytecode (i.e. LIT 0, 0 is args[0])
+        ArrayList<String> args = new ArrayList<>();
+        //read first line of the program
+        String line = null;
         try {
-            //gather all bytecodes and push
-            while (((token = byteSource.read()) != -1)) {
-                if ((char) token != '\n' && (char) token != '\r') {
-                    //add each letter to build a bytecode
-                    word.append((char) token);
-                } else if (!(word.toString().equals(""))) {
-                    tokenizer = new StringTokenizer(word.toString(), DELIMITERS, false);
-                    String t;
-                    while (tokenizer.hasMoreTokens()) {
-                        t = tokenizer.nextToken();
-                        a.add(t);
-                    }
-                    //word will not be "" here to forbid pushing empty string into stack and getting exception
-                    //here we create a new instance of the correct bytecode and add it to the program object
-                    if (a.size() > 0) {
-                        String tempByteCode = a.get(0);
-                        // String tempByteCode = word.toString();
-                        String codeName = CodeTable.getClassName(tempByteCode);
-                        try {
-                            Class c = Class.forName("interpreter.bytecode.bytecodes." + codeName);
-                            ByteCode code = (ByteCode) c.getDeclaredConstructor().newInstance();
-                            code.initCode(a);
-                            p.setCode(code);
-                        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                        //finished with current line
-                        word.delete(0, word.length());
-                        a.clear();
-                    }
-                }
-            }
+            line = byteSource.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        tokenizer = new StringTokenizer(word.toString(), DELIMITERS, false);
-        String t;
-        while (tokenizer.hasMoreTokens()) {
-            t = tokenizer.nextToken();
-            a.add(t);
-        }
-        //run one last time to push the last bytecode
-        if (a.size() > 0) {
-            String tempByteCode = a.get(0);
-            String codeName = CodeTable.getClassName(tempByteCode);
+        while (line != null) {
+            StringTokenizer tok = new StringTokenizer(line);
+            args.clear(); //clear argument list on each iteration
+
+            String codeClass = CodeTable.getClassName(tok.nextToken());
+            while (tok.hasMoreTokens()) {
+                args.add(tok.nextToken());
+            }
+
+            ByteCode byteCode = null;
             try {
-                Class c = Class.forName("interpreter.bytecode.bytecodes." + codeName);
-                ByteCode code = (ByteCode) c.getDeclaredConstructor().newInstance();
-                code.initCode(a);
-                p.setCode(code);
-            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                byteCode = (ByteCode) (Class.forName("interpreter.bytecode.bytecodes." + codeClass).newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            //initialize each bytecode and add it to the program object
+            byteCode.initCode(args);
+            p.setCode(byteCode);
+
+            try {
+                line = byteSource.readLine();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         p.resolveAddrs();
         return p;
     }
