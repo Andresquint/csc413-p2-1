@@ -1,4 +1,4 @@
-HALT
+READ
 POP 3
 FALSEBRANCH else<<4>>
 LABEL else
@@ -7,3 +7,4 @@ STORE 3 i
 LABEL else<<4>>
 GOTO else
 LABEL continue<<3>>
+HALT
