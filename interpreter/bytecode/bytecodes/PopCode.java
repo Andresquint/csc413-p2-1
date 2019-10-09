@@ -12,13 +12,17 @@ public class PopCode extends ByteCode {
     @Override
     public void initCode(ArrayList args) {
         try {
-            levelsToPop = Integer.parseInt((String) args.get(1));
+            levelsToPop = Integer.parseInt((String) args.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
 
     @Override
     public void execute(VirtualMachine virtualMachine) {
-
+        if (levelsToPop < virtualMachine.runStack.size())
+            for (int i = 0; i < levelsToPop; i++) {
+                virtualMachine.runStack.pop();
+            }
     }
 }
