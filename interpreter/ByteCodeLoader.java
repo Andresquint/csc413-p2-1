@@ -6,6 +6,7 @@ import interpreter.bytecode.ByteCode;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -34,9 +35,8 @@ public class ByteCodeLoader extends Object {
      */
     public Program loadCodes() {
         Program p = new Program();
-        //The Vector args holds the arguments associated with each bytecode (i.e. LIT 0, 0 is args[0])
         ArrayList<String> args = new ArrayList<>();
-        //read first line of the program
+
         String line = null;
         try {
             line = byteSource.readLine();
@@ -46,26 +46,40 @@ public class ByteCodeLoader extends Object {
 
         while (line != null) {
             StringTokenizer tok = new StringTokenizer(line);
-            args.clear(); //clear argument list on each iteration
+            //we need to clear the arguments so the next loop run will only get the arguments
+            //for that particular bytecode
+            //we dont want args to hold ALL args, only one bytecode's args
+            args.clear();
 
             String codeClass = CodeTable.getClassName(tok.nextToken());
             while (tok.hasMoreTokens()) {
                 args.add(tok.nextToken());
             }
 
-            ByteCode byteCode = null;
+            ByteCode code = null;
             try {
-                byteCode = (ByteCode) (Class.forName("interpreter.bytecode.bytecodes." + codeClass).newInstance());
+                Class c = Class.forName("interpreter.bytecode.bytecodes." + codeClass);
+                code = (ByteCode) c.getDeclaredConstructor().newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
+
+            //bytecode will never be null because we are assuming the source .cod file
+            //contains no errors and is 100% correct, meaning the class will always be found
+            //so we assert here to prevent an exception
+            assert code != null;
+
             //initialize each bytecode and add it to the program object
-            byteCode.initCode(args);
-            p.setCode(byteCode);
+            code.initCode(args);
+            p.setCode(code);
 
             try {
                 line = byteSource.readLine();
