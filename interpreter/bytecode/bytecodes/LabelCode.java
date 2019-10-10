@@ -22,8 +22,4 @@ public class LabelCode extends ByteCode {
     public String getLabel() {
         return idName;
     }
-
-    public int getNumber() {
-        return idNumber;
-    }
 }
