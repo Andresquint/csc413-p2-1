@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 
 public class RunTimeStack {
@@ -17,11 +18,32 @@ public class RunTimeStack {
     }
 
     public void dump() {
+        Iterator location = framePointer.iterator();
+        int next;
+        int current = (int) location.next();
 
+        for (int i = 0; i < framePointer.size(); i++) {
+            System.out.print("[");
+            next = location.hasNext() ? (int) location.next() : runTimeStack.size();
+
+            int j = current;
+            if (j < next) do {
+                System.out.print(runTimeStack.get(j));
+                if (j != next - 1) {
+                    System.out.print(",");
+                }
+                j++;
+            } while (j < next);
+            System.out.print("]");
+            current = next;
+        }
+        System.out.println();
     }
 
     public int peek() {
-        return runTimeStack.get(runTimeStack.size() - 1);
+        if (!runTimeStack.isEmpty())
+            return runTimeStack.get(runTimeStack.size() - 1);
+        else return 0;
     }
 
     public int push(int i) {
@@ -30,9 +52,11 @@ public class RunTimeStack {
     }
 
     public int pop() {
-        int i = runTimeStack.get(runTimeStack.size() - 1);
-        runTimeStack.remove(runTimeStack.size() - 1);
-        return i;
+        if (!runTimeStack.isEmpty()) {
+            int i = runTimeStack.get(runTimeStack.size() - 1);
+            runTimeStack.remove(runTimeStack.size() - 1);
+            return i;
+        } else return 0;
     }
 
     public int store(int offset) {

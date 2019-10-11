@@ -13,5 +13,8 @@ public class WriteCode extends ByteCode {
     @Override
     public void execute(VirtualMachine virtualMachine) {
         System.out.println(virtualMachine.runStack.peek());
+        if (virtualMachine.isDumping) {
+            System.out.println("WRITE");
+        }
     }
 }

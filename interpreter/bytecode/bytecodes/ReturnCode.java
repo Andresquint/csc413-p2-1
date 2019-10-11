@@ -29,5 +29,18 @@ public class ReturnCode extends ByteCode {
         virtualMachine.runStack.popFrame();
         //get the return value from the stack
         returnValue = virtualMachine.runStack.peek();
+
+        if (virtualMachine.isDumping) {
+            String o;
+            String functionLabel;
+
+            if(!id.contains("<")){
+                functionLabel = id;
+            }else{
+                functionLabel = id.substring(0, id.indexOf("<"));
+            }
+            o = "RETURN " + id + "   exit " + functionLabel + ": " + returnValue;
+            System.out.println(o);
+        }
     }
 }

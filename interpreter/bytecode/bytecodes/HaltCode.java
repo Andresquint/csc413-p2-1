@@ -13,5 +13,8 @@ public class HaltCode extends ByteCode {
     @Override
     public void execute(VirtualMachine virtualMachine) {
         virtualMachine.isRunning = false;
+
+        if(virtualMachine.isDumping)
+            System.out.println("HALT");
     }
 }

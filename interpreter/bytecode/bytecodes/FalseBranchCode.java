@@ -24,6 +24,10 @@ public class FalseBranchCode extends ByteCode {
         if (virtualMachine.runStack.pop() == 0) {
             virtualMachine.pc = labelNumber;
         }
+
+        if (virtualMachine.isDumping) {
+            System.out.println("FALSEBRANCH" + " " + labelName);
+        }
     }
 
     public String getLabel() {

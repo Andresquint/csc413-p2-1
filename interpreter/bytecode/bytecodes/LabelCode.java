@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class LabelCode extends ByteCode {
     private String idName;
-    private int idNumber;
 
     @Override
     public void initCode(ArrayList args) {
@@ -16,14 +15,12 @@ public class LabelCode extends ByteCode {
 
     @Override
     public void execute(VirtualMachine virtualMachine) {
-
+        if (virtualMachine.isDumping) {
+            System.out.println("LABEL" + " " + idName);
+        }
     }
 
     public String getLabel() {
         return idName;
-    }
-
-    public int getNumber() {
-        return idNumber;
     }
 }

@@ -24,5 +24,9 @@ public class PopCode extends ByteCode {
             for (int i = 0; i < levelsToPop; i++) {
                 virtualMachine.runStack.pop();
             }
+
+        if (virtualMachine.isDumping) {
+            System.out.println("POP" + " " + levelsToPop);
+        }
     }
 }

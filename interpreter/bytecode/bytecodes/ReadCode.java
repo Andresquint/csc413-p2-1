@@ -23,5 +23,8 @@ public class ReadCode extends ByteCode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (virtualMachine.isDumping) {
+            System.out.println("READ");
+        }
     }
 }

@@ -24,5 +24,12 @@ public class StoreCode extends ByteCode {
     public void execute(VirtualMachine virtualMachine) {
         topOfStack = virtualMachine.runStack.peek();
         virtualMachine.runStack.store(offset);
+
+        if (virtualMachine.isDumping) {
+            String o = "STORE " + offset + " " + id;
+            if (!id.equals(""))
+                o = o + "    " + id + "=" + topOfStack;
+            System.out.println(o);
+        }
     }
 }

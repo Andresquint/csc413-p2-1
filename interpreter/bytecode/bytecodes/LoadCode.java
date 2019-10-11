@@ -23,5 +23,12 @@ public class LoadCode extends ByteCode {
     @Override
     public void execute(VirtualMachine virtualMachine) {
         virtualMachine.runStack.load(loadValue);
+
+        if (virtualMachine.isDumping) {
+            String o = "LOAD " + loadValue + " " + id;
+            if (!id.equals(""))
+                o = o + "     <load " + id + ">";
+            System.out.println(o);
+        }
     }
 }
