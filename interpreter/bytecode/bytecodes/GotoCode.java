@@ -21,14 +21,14 @@ public class GotoCode extends ByteCode {
     @Override
     public void execute(VirtualMachine virtualMachine) {
         virtualMachine.pc = labelNumber;
+
+        if (virtualMachine.isDumping) {
+            System.out.println("GOTO" + " " + labelName);
+        }
     }
 
     public String getLabel() {
         return labelName;
-    }
-
-    public int getNumber() {
-        return labelNumber;
     }
 
     public void setNumber(int addr) {

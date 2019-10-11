@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CallCode extends ByteCode {
     private int callAddress;
     private String id;
+    private int topValue;
 
     @Override
     public void initCode(ArrayList args) {
@@ -24,7 +25,21 @@ public class CallCode extends ByteCode {
         virtualMachine.returnAddrs.push(virtualMachine.pc);
         //change the program counter to a new location
         virtualMachine.pc = callAddress;
+        //get the top value from runstack for dumping
+        topValue = virtualMachine.runStack.peek();
 
+        if (virtualMachine.isDumping) {
+            String o;
+            String functionLabel;
+
+            if(!id.contains("<")){
+                functionLabel = id;
+            }else{
+                functionLabel = id.substring(0, id.indexOf("<"));
+            }
+            o = "CALL " + id + "    " + functionLabel + "(" + topValue + ")";
+            System.out.println(o);
+        }
     }
 
     public String getLabel() {
