@@ -25,6 +25,8 @@ public class VirtualMachine {
         while (isRunning) {
             ByteCode code = program.getCode(pc);
             code.execute(this);
+            if(isDumping)
+                runStack.dump();
             pc++;
         }
     }
