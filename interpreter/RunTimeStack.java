@@ -21,7 +21,9 @@ public class RunTimeStack {
     }
 
     public int peek() {
-        return runTimeStack.get(runTimeStack.size() - 1);
+        if(!runTimeStack.isEmpty())
+            return runTimeStack.get(runTimeStack.size() - 1);
+        else return 0;
     }
 
     public int push(int i) {
@@ -30,9 +32,11 @@ public class RunTimeStack {
     }
 
     public int pop() {
-        int i = runTimeStack.get(runTimeStack.size() - 1);
+        if(!runTimeStack.isEmpty())
+{        int i = runTimeStack.get(runTimeStack.size() - 1);
         runTimeStack.remove(runTimeStack.size() - 1);
-        return i;
+        return i;}
+        else return 0;
     }
 
     public int store(int offset) {
